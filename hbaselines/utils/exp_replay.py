@@ -41,7 +41,7 @@ class RecurrentMemory(Memory):
                  limit,
                  action_shape,
                  observation_shape,
-                 trace_length=8):
+                 trace_length=16):
         """The replay buffer object.
 
         Parameters

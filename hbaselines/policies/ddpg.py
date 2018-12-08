@@ -526,7 +526,7 @@ class LSTMPolicy(FullyConnectedPolicy):
         This method is further expanded to include placeholders needed by the
         recurrent actors.
         """
-        trace_length = 8  # FIXME: trace length
+        trace_length = 16  # FIXME: trace length
         batch_size = int(batch['obs0'].shape[0] / trace_length)
 
         actor_grads, actor_loss, critic_grads, critic_loss = self.sess.run(
