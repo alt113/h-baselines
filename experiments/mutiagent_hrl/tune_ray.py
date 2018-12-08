@@ -24,7 +24,7 @@ GAMMA = [0.95, 0.99, 0.995, 0.999]
 REWARD_SCALE = [0.0005, 0.001, 0.01, 0.015, 0.1, 1]
 TARGET_UPDATE = [1e-3, 1e-1]
 GRADIENT_CLIPPING = [0, 10]
-NUM_CPUS = 6
+NUM_CPUS = 3
 # TODO: look into nb_train_steps and nb_rollout_steps
 
 
@@ -98,13 +98,16 @@ if __name__ == '__main__':
     args = p.parse_args()
 
     if args.policy == 'FullyConnectedPolicy':
-        runner = os.path.join(os.getcwd(), 'fcnet_baseline.py')
+        raise NotImplementedError
+        runner = os.path.join(os.getcwd(), 'fcnet_baseline_ray.py')
     elif args.policy == 'LSTMPolicy':
         runner = os.path.join(os.getcwd(), 'lstm_baseline_ray.py')
     elif args.policy == 'FeudalPolicy':
+        raise NotImplementedError
         runner = os.path.join(os.getcwd(), 'feudal_baseline.py')
     elif args.policy == 'HIROPolicy':
-        runner = os.path.join(os.getcwd(), 'hiro_baseline.py')
+        raise NotImplementedError
+        runner = os.path.join(os.getcwd(), 'hiro_baseline_ray.py')
     else:
         raise AssertionError('policy must be one of: {"FullyConnectedPolicy", '
                              '"LSTMPolicy", "FeudalPolicy", "HIROPolicy"}')
