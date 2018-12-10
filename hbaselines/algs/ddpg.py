@@ -603,6 +603,10 @@ class DDPG(OffPolicyRLModel):
             m_feed_dict = {
                 self.target_policy.obs_ph: m_batch['obs1'],
                 self.target_policy.goal_ph: m_batch['actions'],
+                self.target_policy.train_length: self.memory.trace_length,
+                self.target_policy.batch_size: self.batch_size,
+                self.target_policy.states_ph[0]: deepcopy(init_state),
+                self.target_policy.states_ph[1]: deepcopy(init_state)
             }
             q_obs = self.sess.run(
                 self.target_policy.critic_with_actor[0],
@@ -642,14 +646,20 @@ class DDPG(OffPolicyRLModel):
             # Get a batch
             batch = self.memory.sample(batch_size=self.batch_size)
 
-            q_obs1 = self.sess.run(
-                self.target_policy.critic_with_actor,
+            if self.recurrent or self.hierarchical:
                 feed_dict={
                     self.target_policy.obs_ph: batch['obs1'],
                     self.target_policy.batch_size: self.batch_size,
                     self.target_policy.train_length: self.memory.trace_length,
                     self.target_policy.states_ph: deepcopy(init_state)
                 }
+            else:
+                feed_dict={
+                    self.target_policy.obs_ph: batch['obs1'],
+                }
+            q_obs1 = self.sess.run(
+                self.target_policy.critic_with_actor,
+                feed_dict=feed_dict
             )
 
             feed_dict = {
