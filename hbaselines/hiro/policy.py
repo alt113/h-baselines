@@ -1298,8 +1298,11 @@ class GoalDirectedPolicy(ActorCriticPolicy):
             current Worker state observation
         low_actions : array_like
             current Worker environmental action
+        ------
+        FIXME why is this here when we have `low_states`?
         low_state_reprs : array_like
             current Worker state observation
+        ------
         k : int, optional
             number of goals returned, excluding the initial goal and the mean
             value
